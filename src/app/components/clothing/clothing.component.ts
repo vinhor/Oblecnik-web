@@ -32,7 +32,7 @@ export class ClothingComponent implements OnDestroy, OnInit {
           this.processForecastData(value);
         },
         error: (error) => {
-          this.fetchingError.set(error);
+          this.fetchingError.set(JSON.stringify(error));
         },
       });
   }
