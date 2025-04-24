@@ -25,12 +25,7 @@ export class ClothingComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.subscription = this.http
       .get<ForecastData>(
-        `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${50}&lon=${14}`,
-        {
-          headers: {
-            'User-Agent': 'Oblecnik-web',
-          },
-        }
+        `https://oblecnik-web.pages.dev/metno?lat=${50}&lon=${14}`
       )
       .subscribe({
         next: (value) => {
