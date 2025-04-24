@@ -60,7 +60,7 @@ type WeatherData = {
       summary: {
         symbol_code: string;
       };
-      details: {}; // Empty, just like the Go struct
+      details: {};
     };
     next_1_hours: {
       summary: {
