@@ -10,8 +10,8 @@ export class WeatherService {
 
   getClothing(): Observable<string> {
     return this.http
-      .get<any>(`/metno?lat=${50}&lon=${14}`)
-      .pipe(map((value) => JSON.stringify(value)));
+      .get<ForecastData>(`/metno?lat=${50}&lon=${14}`)
+      .pipe(map((value) => this.weatherToClothing(value)));
   }
 
   private weatherToClothing(forecast: ForecastData): string {
