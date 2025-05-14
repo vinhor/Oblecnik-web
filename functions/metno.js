@@ -1,15 +1,13 @@
-export const onRequestGet = async (context) => {
-  const { search } = new URL(context.request.url);
-  const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/compact${search}`;
+export async function onRequest(context) {
+  const { request } = context;
 
-  const response = await fetch(apiUrl, {
-    headers: {
-      "User-Agent": "oblecnik/1.0 (vincent.horecky@seznam.cz)",
-    },
-  });
+  // Log all headers
+  const headers = {};
+  for (const [key, value] of request.headers.entries()) {
+    headers[key] = value;
+  }
 
-  const data = await response.text();
-  return new Response(data, {
+  return new Response(JSON.stringify(headers, null, 2), {
     headers: { "Content-Type": "application/json" },
   });
-};
+}

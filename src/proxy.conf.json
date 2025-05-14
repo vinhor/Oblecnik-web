@@ -1,0 +1,8 @@
+{
+  "/metno": {
+    "target": "https://api.met.no",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": { "^/metno": "/weatherapi/locationforecast/2.0/compact" }
+  }
+}
