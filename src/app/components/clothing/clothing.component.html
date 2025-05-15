@@ -1,1 +1,23 @@
-<p>{{ clothing$ | async }}</p>
+<p>
+  @if (clothing$ | async) {
+    @let clothing = clothing$ | async;
+    @if (clothing?.Hoodie) {
+      Wear hoodie lol
+    } @else {
+      Don't wear hoddie lol
+    }
+    @switch (clothing?.JacketIndex) {
+      @case (0) {
+        Don't wear jacket lol
+      }
+      @case (1) {
+        Wear light jacket lol
+      }
+      @case (2) {
+        Wear heavy jacket lol
+      }
+    }
+  } @else {
+    Loading lol
+  }
+</p>

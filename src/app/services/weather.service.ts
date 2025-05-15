@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 })
 export class WeatherService {
   http = inject(HttpClient);
-  private weatherCodes: object = {
+  private weatherCodes = {
     cloudy: [
       'partlycloudy_day',
       'partlycloudy_night',
@@ -87,15 +87,118 @@ export class WeatherService {
     ],
   };
 
-  getClothing(): Observable<string> {
+  getClothing(): Observable<ClothingSummary> {
     return this.http
-      .get<ForecastData>(`/metno?lat=${50}&lon=${14}`)
+      .get<ForecastData>(`/metno?lat=${50}&lon=${14}`) // CF function, because User-Agent
       .pipe(map((value) => this.weatherToClothing(value)));
   }
 
-  private weatherToClothing(forecast: ForecastData): string {
-    return forecast.properties.timeseries[0].data.next_12_hours.summary
-      .symbol_code;
+  private weatherToClothing(forecast: ForecastData): ClothingSummary {
+    forecast.properties.timeseries = forecast.properties.timeseries.filter(
+      (value) => {
+        let time = new Date(value.time);
+        let now = new Date();
+        let compareDate: string;
+        if (now.getHours() > 7) {
+          let nextDay = new Date();
+          nextDay.setDate(now.getDate() + 1);
+          compareDate = nextDay.toISOString().split('T')[0];
+        } else {
+          compareDate = now.toISOString().split('T')[0];
+        }
+        if (time.toISOString().split('T')[0] !== compareDate) {
+          return false;
+        }
+        return (
+          time.getHours() === 7 ||
+          time.getHours() === 12 ||
+          time.getHours() === 15
+        );
+      },
+    );
+    let weatherSummary: WeatherSummary = {
+      temps: [
+        forecast.properties.timeseries[0].data.instant.details.air_temperature,
+        forecast.properties.timeseries[1].data.instant.details.air_temperature,
+        forecast.properties.timeseries[2].data.instant.details.air_temperature,
+      ],
+      windIndex: Wind.No,
+      windSpeed: 0,
+      rainingIndex: Rain.Sunny,
+    };
+
+    if (
+      this.weatherCodes.drizzle.includes(
+        forecast.properties.timeseries[0].data.next_12_hours.summary
+          .symbol_code,
+      ) &&
+      weatherSummary.rainingIndex !== Rain.HeavyRain
+    ) {
+      weatherSummary.rainingIndex = Rain.LightRain;
+    } else if (
+      this.weatherCodes.rain.includes(
+        forecast.properties.timeseries[0].data.next_12_hours.summary
+          .symbol_code,
+      )
+    ) {
+      weatherSummary.rainingIndex = Rain.HeavyRain;
+    } else if (
+      this.weatherCodes.cloudy.includes(
+        forecast.properties.timeseries[0].data.next_12_hours.summary
+          .symbol_code,
+      ) &&
+      weatherSummary.rainingIndex === Rain.Sunny
+    ) {
+      weatherSummary.rainingIndex = Rain.Overcast;
+    }
+
+    for (const value of forecast.properties.timeseries) {
+      if (
+        value.data.instant.details.wind_speed <= 12 &&
+        value.data.instant.details.wind_speed > 8 &&
+        weatherSummary.windIndex === Wind.High
+      ) {
+        weatherSummary.windIndex = Wind.Low;
+      } else if (value.data.instant.details.wind_speed > 12) {
+        weatherSummary.windIndex = Wind.High;
+      }
+
+      if (value.data.instant.details.wind_speed > weatherSummary.windSpeed) {
+        weatherSummary.windSpeed = value.data.instant.details.wind_speed;
+      }
+    }
+
+    let clothingSummary: ClothingSummary = {
+      Hoodie: false,
+      JacketIndex: Jacket.No,
+      TrousersIndex: Trousers.Warm,
+    };
+    let minTemp = Math.min(...weatherSummary.temps);
+    let maxTemp = Math.max(...weatherSummary.temps);
+
+    if (
+      maxTemp < 21 ||
+      (maxTemp < 26 && weatherSummary.rainingIndex >= Rain.LightRain)
+    ) {
+      clothingSummary.Hoodie = true;
+    }
+
+    if (maxTemp < 10) {
+      clothingSummary.JacketIndex = Jacket.Heavy;
+    } else if (
+      maxTemp < 15 ||
+      (weatherSummary.rainingIndex === Rain.HeavyRain && minTemp >= 10)
+    ) {
+      clothingSummary.JacketIndex = Jacket.Light;
+    }
+
+    if (maxTemp > 25) {
+      clothingSummary.TrousersIndex = Trousers.Shorts;
+    } else if (maxTemp > 5) {
+      clothingSummary.TrousersIndex = Trousers.Standard;
+    }
+
+    return clothingSummary;
   }
 }
 
@@ -159,3 +262,41 @@ type ForecastData = {
     timeseries: WeatherData[];
   };
 };
+
+type WeatherSummary = {
+  temps: number[]; // [0] = ráno, [1] = poledne, [2] = odpoledne
+  windSpeed: number;
+  windIndex: Wind;
+  rainingIndex: Rain;
+};
+
+export type ClothingSummary = {
+  Hoodie: boolean;
+  JacketIndex: Jacket;
+  TrousersIndex: Trousers;
+};
+
+enum Wind {
+  No,
+  Low,
+  High, // 0 = < 8 m/s, 1 = 8-12 m/s, 2 = > 12 m/s
+}
+
+enum Rain {
+  Sunny,
+  Overcast,
+  LightRain,
+  HeavyRain,
+}
+
+export enum Jacket {
+  No,
+  Light,
+  Heavy,
+}
+
+export enum Trousers {
+  Shorts,
+  Standard,
+  Warm,
+}
