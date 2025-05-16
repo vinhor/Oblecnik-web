@@ -1,89 +1,89 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Injectable, inject } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map, Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class WeatherService {
   http = inject(HttpClient);
   private weatherCodes = {
     cloudy: [
-      'partlycloudy_day',
-      'partlycloudy_night',
-      'partlycloudy_polartwilight',
-      'cloudy',
+      "partlycloudy_day",
+      "partlycloudy_night",
+      "partlycloudy_polartwilight",
+      "cloudy",
     ],
     drizzle: [
-      'lightsnowshowers_day',
-      'lightsnowshowers_night',
-      'lightsnowshowers_polartwilight',
-      'lightrainshowers_day',
-      'lightrainshowers_night',
-      'lightrainshowers_polartwilight',
-      'lightsleet',
-      'lightsleetshowers_day',
-      'lightsleetshowers_night',
-      'lightsleetshowers_polartwilight',
-      'lightrain',
-      'fog',
-      'lightrainshowersandthunder_day',
-      'lightrainshowersandthunder_night',
-      'lightrainshowersandthunder_polartwilight',
-      'lightsnowandthunder',
-      'lightssleetshowersandthunder_day',
-      'lightssleetshowersandthunder_night',
-      'lightssleetshowersandthunder_polartwilight',
-      'lightsleetandthunder',
+      "lightsnowshowers_day",
+      "lightsnowshowers_night",
+      "lightsnowshowers_polartwilight",
+      "lightrainshowers_day",
+      "lightrainshowers_night",
+      "lightrainshowers_polartwilight",
+      "lightsleet",
+      "lightsleetshowers_day",
+      "lightsleetshowers_night",
+      "lightsleetshowers_polartwilight",
+      "lightrain",
+      "fog",
+      "lightrainshowersandthunder_day",
+      "lightrainshowersandthunder_night",
+      "lightrainshowersandthunder_polartwilight",
+      "lightsnowandthunder",
+      "lightssleetshowersandthunder_day",
+      "lightssleetshowersandthunder_night",
+      "lightssleetshowersandthunder_polartwilight",
+      "lightsleetandthunder",
     ],
     rain: [
-      'heavyrainandthunder',
-      'heavysnowandthunder',
-      'rainandthunder',
-      'heavysleetshowersandthunder_day',
-      'heavysleetshowersandthunder_night',
-      'heavysleetshowersandthunder_polartwilight',
-      'heavysnow',
-      'heavyrainshowers_day',
-      'heavyrainshowers_night',
-      'heavyrainshowers_polartwilight',
-      'heavyrain',
-      'heavysleetshowers_day',
-      'heavysleetshowers_night',
-      'heavysleetshowers_polartwilight',
-      'snow',
-      'heavyrainshowersandthunder_day',
-      'heavyrainshowersandthunder_night',
-      'heavyrainshowersandthunder_polartwilight',
-      'snowshowers_day',
-      'snowshowers_night',
-      'snowshowers_polartwilight',
-      'snowshowersandthunder_day',
-      'snowshowersandthunder_night',
-      'snowshowersandthunder_polartwilight',
-      'heavysleetandthunder',
-      'rainshowersandthunder_day',
-      'rainshowersandthunder_night',
-      'rainshowersandthunder_polartwilight',
-      'rain',
-      'rainshowers_day',
-      'rainshowers_night',
-      'rainshowers_polartwilight',
-      'sleetandthunder',
-      'sleet',
-      'sleetshowersandthunder_day',
-      'sleetshowersandthunder_night',
-      'sleetshowersandthunder_polartwilight',
-      'rainshowersandthunder_day',
-      'rainshowersandthunder_night',
-      'rainshowersandthunder_polartwilight',
-      'snowandthunder',
-      'heavysnowshowersandthunder_day',
-      'heavysnowshowersandthunder_night',
-      'heavysnowshowersandthunder_polartwilight',
-      'heavysnowshowers_day',
-      'heavysnowshowers_night',
-      'heavysnowshowers_polartwilight',
+      "heavyrainandthunder",
+      "heavysnowandthunder",
+      "rainandthunder",
+      "heavysleetshowersandthunder_day",
+      "heavysleetshowersandthunder_night",
+      "heavysleetshowersandthunder_polartwilight",
+      "heavysnow",
+      "heavyrainshowers_day",
+      "heavyrainshowers_night",
+      "heavyrainshowers_polartwilight",
+      "heavyrain",
+      "heavysleetshowers_day",
+      "heavysleetshowers_night",
+      "heavysleetshowers_polartwilight",
+      "snow",
+      "heavyrainshowersandthunder_day",
+      "heavyrainshowersandthunder_night",
+      "heavyrainshowersandthunder_polartwilight",
+      "snowshowers_day",
+      "snowshowers_night",
+      "snowshowers_polartwilight",
+      "snowshowersandthunder_day",
+      "snowshowersandthunder_night",
+      "snowshowersandthunder_polartwilight",
+      "heavysleetandthunder",
+      "rainshowersandthunder_day",
+      "rainshowersandthunder_night",
+      "rainshowersandthunder_polartwilight",
+      "rain",
+      "rainshowers_day",
+      "rainshowers_night",
+      "rainshowers_polartwilight",
+      "sleetandthunder",
+      "sleet",
+      "sleetshowersandthunder_day",
+      "sleetshowersandthunder_night",
+      "sleetshowersandthunder_polartwilight",
+      "rainshowersandthunder_day",
+      "rainshowersandthunder_night",
+      "rainshowersandthunder_polartwilight",
+      "snowandthunder",
+      "heavysnowshowersandthunder_day",
+      "heavysnowshowersandthunder_night",
+      "heavysnowshowersandthunder_polartwilight",
+      "heavysnowshowers_day",
+      "heavysnowshowers_night",
+      "heavysnowshowers_polartwilight",
     ],
   };
 
@@ -102,11 +102,11 @@ export class WeatherService {
         if (now.getHours() > 7) {
           let nextDay = new Date();
           nextDay.setDate(now.getDate() + 1);
-          compareDate = nextDay.toISOString().split('T')[0];
+          compareDate = nextDay.toISOString().split("T")[0];
         } else {
-          compareDate = now.toISOString().split('T')[0];
+          compareDate = now.toISOString().split("T")[0];
         }
-        if (time.toISOString().split('T')[0] !== compareDate) {
+        if (time.toISOString().split("T")[0] !== compareDate) {
           return false;
         }
         return (
@@ -169,9 +169,11 @@ export class WeatherService {
     }
 
     let clothingSummary: ClothingSummary = {
-      Hoodie: false,
-      JacketIndex: Jacket.No,
-      TrousersIndex: Trousers.Warm,
+      hoodie: false,
+      jacketIndex: Jacket.No,
+      trousersIndex: Trousers.Warm,
+      rainIndex: Rain.Sunny,
+      windSpeed: 0,
     };
     let minTemp = Math.min(...weatherSummary.temps);
     let maxTemp = Math.max(...weatherSummary.temps);
@@ -180,23 +182,26 @@ export class WeatherService {
       maxTemp < 21 ||
       (maxTemp < 26 && weatherSummary.rainingIndex >= Rain.LightRain)
     ) {
-      clothingSummary.Hoodie = true;
+      clothingSummary.hoodie = true;
     }
 
     if (maxTemp < 10) {
-      clothingSummary.JacketIndex = Jacket.Heavy;
+      clothingSummary.jacketIndex = Jacket.Heavy;
     } else if (
       maxTemp < 15 ||
       (weatherSummary.rainingIndex === Rain.HeavyRain && minTemp >= 10)
     ) {
-      clothingSummary.JacketIndex = Jacket.Light;
+      clothingSummary.jacketIndex = Jacket.Light;
     }
 
     if (maxTemp > 25) {
-      clothingSummary.TrousersIndex = Trousers.Shorts;
+      clothingSummary.trousersIndex = Trousers.Shorts;
     } else if (maxTemp > 5) {
-      clothingSummary.TrousersIndex = Trousers.Standard;
+      clothingSummary.trousersIndex = Trousers.Standard;
     }
+
+    clothingSummary.rainIndex = weatherSummary.rainingIndex;
+    clothingSummary.windSpeed = weatherSummary.windSpeed;
 
     return clothingSummary;
   }
@@ -271,9 +276,11 @@ type WeatherSummary = {
 };
 
 export type ClothingSummary = {
-  Hoodie: boolean;
-  JacketIndex: Jacket;
-  TrousersIndex: Trousers;
+  hoodie: boolean;
+  jacketIndex: Jacket;
+  trousersIndex: Trousers;
+  rainIndex: Rain;
+  windSpeed: number;
 };
 
 enum Wind {
