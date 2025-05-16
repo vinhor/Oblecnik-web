@@ -168,15 +168,17 @@ export class WeatherService {
       }
     }
 
+    let minTemp = Math.min(...weatherSummary.temps);
+    let maxTemp = Math.max(...weatherSummary.temps);
     let clothingSummary: ClothingSummary = {
       hoodie: false,
       jacketIndex: Jacket.No,
       trousersIndex: Trousers.Warm,
-      rainIndex: Rain.Sunny,
-      windSpeed: 0,
+      rainIndex: weatherSummary.rainingIndex,
+      windSpeed: weatherSummary.windSpeed,
+      minTemp: minTemp,
+      maxTemp: maxTemp,
     };
-    let minTemp = Math.min(...weatherSummary.temps);
-    let maxTemp = Math.max(...weatherSummary.temps);
 
     if (
       maxTemp < 21 ||
@@ -199,9 +201,6 @@ export class WeatherService {
     } else if (maxTemp > 5) {
       clothingSummary.trousersIndex = Trousers.Standard;
     }
-
-    clothingSummary.rainIndex = weatherSummary.rainingIndex;
-    clothingSummary.windSpeed = weatherSummary.windSpeed;
 
     return clothingSummary;
   }
@@ -281,6 +280,8 @@ export type ClothingSummary = {
   trousersIndex: Trousers;
   rainIndex: Rain;
   windSpeed: number;
+  minTemp: number;
+  maxTemp: number;
 };
 
 enum Wind {
