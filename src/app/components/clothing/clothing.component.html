@@ -1,1 +1,51 @@
-<p>{{ clothing$ | async }}</p>
+<p>
+  @if (clothing$ | async) {
+    @let clothing = clothing$ | async;
+    Tričko
+    <br />
+    @if (clothing?.hoodie) {
+      Mikina
+      <br />
+    }
+    @switch (clothing?.jacketIndex) {
+      @case (1) {
+        Lehká bunda
+        <br />
+      }
+      @case (2) {
+        Tlustá bunda
+        <br />
+      }
+    }
+    @switch (clothing?.trousersIndex) {
+      @case (0) {
+        Šortky
+      }
+      @case (1) {
+        Kalhoty
+      }
+      @case (2) {
+        Teplé kalhoty
+      }
+    }
+    <br />
+    Teploty od {{ clothing?.minTemp }}°C do {{ clothing?.maxTemp }}°C. Vítr až
+    {{ clothing?.windSpeed }} m/s.
+    @switch (clothing?.rainIndex) {
+      @case (0) {
+        Slunečno
+      }
+      @case (1) {
+        Zataženo
+      }
+      @case (2) {
+        Déšť
+      }
+      @case (3) {
+        Silný déšť
+      }
+    }
+  } @else {
+    Teraz premýšla...
+  }
+</p>
