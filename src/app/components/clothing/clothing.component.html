@@ -1,23 +1,51 @@
 <p>
   @if (clothing$ | async) {
     @let clothing = clothing$ | async;
-    @if (clothing?.Hoodie) {
-      Wear hoodie lol
-    } @else {
-      Don't wear hoddie lol
+    Tričko
+    <br />
+    @if (clothing?.hoodie) {
+      Mikina
+      <br />
     }
-    @switch (clothing?.JacketIndex) {
-      @case (0) {
-        Don't wear jacket lol
-      }
+    @switch (clothing?.jacketIndex) {
       @case (1) {
-        Wear light jacket lol
+        Lehká bunda
+        <br />
       }
       @case (2) {
-        Wear heavy jacket lol
+        Tlustá bunda
+        <br />
+      }
+    }
+    @switch (clothing?.trousersIndex) {
+      @case (0) {
+        Šortky
+      }
+      @case (1) {
+        Kalhoty
+      }
+      @case (2) {
+        Teplé kalhoty
+      }
+    }
+    <br />
+    Teploty od {{ clothing?.minTemp }}°C do {{ clothing?.maxTemp }}°C. Vítr až
+    {{ clothing?.windSpeed }} m/s.
+    @switch (clothing?.rainIndex) {
+      @case (0) {
+        Slunečno
+      }
+      @case (1) {
+        Zataženo
+      }
+      @case (2) {
+        Déšť
+      }
+      @case (3) {
+        Silný déšť
       }
     }
   } @else {
-    Loading lol
+    Teraz premýšla...
   }
 </p>
