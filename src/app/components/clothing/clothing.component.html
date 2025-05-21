@@ -1,6 +1,8 @@
 @if (clothing$ | async) {
   @let clothing = clothing$ | async;
-  <p class="font-sans text-3xl/20 font-medium text-center m-8">
+  <p
+    class="font-sans text-3xl/20 font-medium text-center m-8 dark:text-zinc-100"
+  >
     Tričko
     <br />
     @if (clothing?.hoodie) {
@@ -30,25 +32,27 @@
   </p>
 
   <p
-    class="font-sans text-2xl text-center mt-20 flex justify-center items-center"
+    class="font-sans text-2xl text-center mt-20 flex justify-center items-center dark:text-zinc-100"
   >
     <svg
       viewBox="0 0 24 24"
-      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9"
+      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 dark:stroke-zinc-100"
       stroke-linecap="round"
       stroke-linejoin="round"
     >
       <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
     </svg>
-    <span class="text-sky-900">{{ clothing?.minTemp }}°C</span
-    >&nbsp;-&nbsp;<span class="text-red-900"> {{ clothing?.maxTemp }}°C</span>.
+    <span class="text-sky-900 dark:text-sky-500">{{ clothing?.minTemp }}°C</span
+    >&nbsp;-&nbsp;<span class="text-red-900 dark:text-red-600">
+      {{ clothing?.maxTemp }}°C</span
+    >.
   </p>
   <p
-    class="font-sans text-2xl text-center mt-4 flex justify-center items-center"
+    class="font-sans text-2xl text-center mt-4 flex justify-center items-center dark:text-zinc-100"
   >
     <svg
       viewBox="0 0 24 24"
-      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 m-2"
+      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 m-2 dark:stroke-zinc-100"
       stroke-linecap="round"
       stroke-linejoin="round"
     >
@@ -57,7 +61,9 @@
       ></path>
     </svg>
     Až&nbsp;
-    <span class="text-indigo-900">{{ clothing?.windSpeed }} m/s</span>.
+    <span class="text-indigo-900 dark:text-indigo-500"
+      >{{ clothing?.windSpeed }} m/s</span
+    >.
   </p>
 
   <p
@@ -69,7 +75,7 @@
           viewBox="0 0 24 24"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="stroke-amber-600"
+          class="stroke-amber-600 dark:stroke-amber-500"
           aria-label="Slunečno"
         >
           <circle cx="12" cy="12" r="5"></circle>
@@ -88,7 +94,7 @@
           viewBox="0 0 24 24"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="stroke-zinc-600"
+          class="stroke-zinc-600 dark:stroke-zinc-200"
           aria-label="Zataženo"
         >
           <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
@@ -99,7 +105,7 @@
           viewBox="0 0 24 24"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="stroke-sky-700"
+          class="stroke-sky-700 dark:stroke-sky-600"
           aria-label="Déšť"
         >
           <line x1="8" y1="19" x2="8" y2="21"></line>
@@ -116,7 +122,7 @@
           viewBox="0 0 24 24"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="stroke-cyan-900"
+          class="stroke-cyan-900 dark:stroke-cyan-600"
           aria-label="Silný déšť"
         >
           <line x1="16" y1="13" x2="16" y2="21"></line>
