@@ -1,6 +1,6 @@
-<p>
-  @if (clothing$ | async) {
-    @let clothing = clothing$ | async;
+@if (clothing$ | async) {
+  @let clothing = clothing$ | async;
+  <p class="font-sans text-3xl/20 font-medium text-center m-8">
     Tričko
     <br />
     @if (clothing?.hoodie) {
@@ -10,13 +10,12 @@
     @switch (clothing?.jacketIndex) {
       @case (1) {
         Lehká bunda
-        <br />
       }
       @case (2) {
         Tlustá bunda
-        <br />
       }
     }
+    <br />
     @switch (clothing?.trousersIndex) {
       @case (0) {
         Šortky
@@ -28,24 +27,106 @@
         Teplé kalhoty
       }
     }
-    <br />
-    Teploty od {{ clothing?.minTemp }}°C do {{ clothing?.maxTemp }}°C. Vítr až
-    {{ clothing?.windSpeed }} m/s.
+  </p>
+
+  <p
+    class="font-sans text-2xl text-center mt-20 flex justify-center items-center"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+    </svg>
+    <span class="text-sky-900">{{ clothing?.minTemp }}°C</span
+    >&nbsp;-&nbsp;<span class="text-red-900"> {{ clothing?.maxTemp }}°C</span>.
+  </p>
+  <p
+    class="font-sans text-2xl text-center mt-4 flex justify-center items-center"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 m-2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path
+        d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"
+      ></path>
+    </svg>
+    Až&nbsp;
+    <span class="text-indigo-900">{{ clothing?.windSpeed }} m/s</span>.
+  </p>
+
+  <p
+    class="flex justify-center *:fill-none *:max-w-15 *:max-h-15 *:stroke-2 m-8"
+  >
     @switch (clothing?.rainIndex) {
       @case (0) {
-        Slunečno
+        <svg
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="stroke-amber-600"
+          aria-label="Slunečno"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
       }
       @case (1) {
-        Zataženo
+        <svg
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="stroke-zinc-600"
+          aria-label="Zataženo"
+        >
+          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+        </svg>
       }
       @case (2) {
-        Déšť
+        <svg
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="stroke-sky-700"
+          aria-label="Déšť"
+        >
+          <line x1="8" y1="19" x2="8" y2="21"></line>
+          <line x1="8" y1="13" x2="8" y2="15"></line>
+          <line x1="16" y1="19" x2="16" y2="21"></line>
+          <line x1="16" y1="13" x2="16" y2="15"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="12" y1="15" x2="12" y2="17"></line>
+          <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+        </svg>
       }
       @case (3) {
-        Silný déšť
+        <svg
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="stroke-cyan-900"
+          aria-label="Silný déšť"
+        >
+          <line x1="16" y1="13" x2="16" y2="21"></line>
+          <line x1="8" y1="13" x2="8" y2="21"></line>
+          <line x1="12" y1="15" x2="12" y2="23"></line>
+          <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+        </svg>
       }
     }
-  } @else {
-    Teraz premýšla...
-  }
-</p>
+  </p>
+} @else {
+  Teraz premýšla...
+}
