@@ -94,6 +94,16 @@ export class WeatherService {
   }
 
   private weatherToClothing(forecast: ForecastData): ClothingSummary {
+      let clothingSummary: ClothingSummary = {
+      hoodie: false,
+      jacketIndex: Jacket.No,
+      trousersIndex: Trousers.Warm,
+      rainIndex: weatherSummary.rainingIndex,
+      windSpeed: weatherSummary.windSpeed,
+      minTemp: minTemp,
+      maxTemp: maxTemp,
+      date: "",
+    };
     forecast.properties.timeseries = forecast.properties.timeseries.filter(
       (value) => {
         let time = new Date(value.time);
@@ -109,6 +119,7 @@ export class WeatherService {
         if (time.toISOString().split("T")[0] !== compareDate) {
           return false;
         }
+        clothingSummary.date = compareDate;
         return (
           time.getHours() === 7 ||
           time.getHours() === 12 ||
@@ -170,15 +181,6 @@ export class WeatherService {
 
     let minTemp = Math.min(...weatherSummary.temps);
     let maxTemp = Math.max(...weatherSummary.temps);
-    let clothingSummary: ClothingSummary = {
-      hoodie: false,
-      jacketIndex: Jacket.No,
-      trousersIndex: Trousers.Warm,
-      rainIndex: weatherSummary.rainingIndex,
-      windSpeed: weatherSummary.windSpeed,
-      minTemp: minTemp,
-      maxTemp: maxTemp,
-    };
 
     if (
       maxTemp < 21 ||
@@ -282,6 +284,7 @@ export type ClothingSummary = {
   windSpeed: number;
   minTemp: number;
   maxTemp: number;
+  date: string;
 };
 
 enum Wind {
