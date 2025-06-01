@@ -138,7 +138,9 @@
       }
     }
   </p>
-  <p>{{ clothing?.date }}</p>
+  <p class="text-center font-sans text-2xl dark:text-zinc-100">
+    Data pro {{ clothing?.date | date: "mediumDate" }}
+  </p>
 } @else {
   Teraz premýšla...
 }
