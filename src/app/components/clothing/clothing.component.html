@@ -12,12 +12,13 @@
     @switch (clothing?.jacketIndex) {
       @case (1) {
         Lehká bunda
+        <br />
       }
       @case (2) {
         Tlustá bunda
+        <br />
       }
     }
-    <br />
     @switch (clothing?.trousersIndex) {
       @case (0) {
         Šortky
@@ -28,6 +29,10 @@
       @case (2) {
         Teplé kalhoty
       }
+    }
+    @if (clothing!.rainIndex >= 2) {
+      <br />
+      Deštník
     }
   </p>
 
@@ -45,7 +50,7 @@
     <span class="text-sky-900 dark:text-sky-500">{{ clothing?.minTemp }}°C</span
     >&nbsp;-&nbsp;<span class="text-red-900 dark:text-red-600">
       {{ clothing?.maxTemp }}°C</span
-    >.
+    >&nbsp; ve dne.
   </p>
   <p
     class="font-sans text-2xl text-center mt-4 flex justify-center items-center dark:text-zinc-100"
@@ -133,7 +138,9 @@
       }
     }
   </p>
-<p>{{ clothing?.date }}</p>
+  <p class="text-center font-sans text-2xl dark:text-zinc-100">
+    Data pro {{ clothing?.date | date: "mediumDate" }}
+  </p>
 } @else {
   Teraz premýšla...
 }
