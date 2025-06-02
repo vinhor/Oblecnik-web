@@ -4,5 +4,11 @@
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": { "^/metno": "/weatherapi/locationforecast/2.0/compact" }
+  },
+  "/nominatim": {
+    "target": "https://nominatim.openstreetmap.org",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": { "^/nominatim": "/search" }
   }
 }

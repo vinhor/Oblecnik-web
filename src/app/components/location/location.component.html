@@ -1,0 +1,5 @@
+<button (click)="handleClick()">click me!</button>
+@let locations = locations$ | async;
+@if (locations$ | async) {
+  {{ locations | json }}
+}
