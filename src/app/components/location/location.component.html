@@ -1,4 +1,4 @@
-<button (click)="handleClick()">click me!</button>
+<input type="search" id="search" [formControl]="search" />
 @let locations = locations$ | async;
 @if (locations$ | async) {
   {{ locations | json }}
