@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, signal, Signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map, Observable } from "rxjs";
 
@@ -6,8 +6,17 @@ import { map, Observable } from "rxjs";
   providedIn: "root",
 })
 export class NominatimService {
-  http = inject(HttpClient);
-  getLocations(location: string): Observable<Location[]> {
+  private http = inject(HttpClient);
+  location = signal({ latitude: 50, longitude: 14, description: "" });
+
+  constructor() {
+    const locationFromLs = localStorage.getItem("location");
+    if (!!locationFromLs) {
+      this.location.set(JSON.parse(locationFromLs));
+    }
+  }
+
+  getLocationsFromNominatim(location: string): Observable<Location[]> {
     let locationURI = encodeURI(location);
     return this.http
       .get<
@@ -21,18 +30,22 @@ export class NominatimService {
             const country = address["country"] || "";
             const descriptionParts = [loc.name, state, country].filter(Boolean);
             return {
-              lat: parseFloat(loc.lat),
-              long: parseFloat(loc.lon),
+              latitude: parseFloat(loc.lat),
+              longitude: parseFloat(loc.lon),
               description: descriptionParts.join(", "),
             };
           }),
         ),
       );
   }
+  setLocation(location: Location) {
+    localStorage.setItem("location", JSON.stringify(location));
+    this.location.set(location);
+  }
 }
 export type Location = {
-  long: number;
-  lat: number;
+  longitude: number;
+  latitude: number;
   description: string;
 };
 

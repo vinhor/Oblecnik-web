@@ -1,5 +1,27 @@
-<input type="search" id="search" [formControl]="search" />
-@let locations = locations$ | async;
-@if (locations$ | async) {
-  {{ locations | json }}
-}
+<section class="flex flex-col items-center lg:items-end-safe relative">
+  <search class="mt-4">
+    <label for="search" class="text-zinc-100">Poloha: </label>
+    <input
+      type="search"
+      id="search"
+      class="p-2 rounded-full max-w-full border-zinc-100 border-1 outline-none no-search-clear bg-zinc-100 mr-4"
+      [formControl]="search"
+    />
+  </search>
+  @let locations = locations$ | async;
+  @if (!!locations && locations.length > 0) {
+    <ul
+      class="mx-4 mt-2 rounded-xl top-full absolute overflow-hidden max-w-full"
+    >
+      @for (location of locations; track $index) {
+        <li class="p-2 even:bg-zinc-100 box-border odd:bg-zinc-300">
+          <button (click)="handleClick(location)">
+            {{ location.description }}
+          </button>
+        </li>
+      }
+    </ul>
+  } @else if (loading) {
+    <p class="text-white">teraz premýšla</p>
+  }
+</section>

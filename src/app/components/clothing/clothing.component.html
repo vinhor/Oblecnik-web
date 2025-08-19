@@ -1,5 +1,5 @@
-@if (clothing$ | async) {
-  @let clothing = clothing$ | async;
+@if (clothing$() | async) {
+  @let clothing = clothing$() | async;
   <p
     class="font-sans text-3xl/20 font-medium text-center m-8 dark:text-zinc-100"
   >
