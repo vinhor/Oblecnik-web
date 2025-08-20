@@ -1,7 +1,7 @@
 @if (clothing$() | async) {
   @let clothing = clothing$() | async;
   <p
-    class="font-sans text-3xl/20 font-medium text-center m-8 dark:text-zinc-100"
+    class="m-8 text-center font-sans text-3xl/20 font-medium dark:text-zinc-100"
   >
     Tričko
     <br />
@@ -37,11 +37,11 @@
   </p>
 
   <p
-    class="font-sans text-2xl text-center mt-20 flex justify-center items-center dark:text-zinc-100"
+    class="mt-20 flex items-center justify-center text-center font-sans text-2xl dark:text-zinc-100"
   >
     <svg
       viewBox="0 0 24 24"
-      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 dark:stroke-zinc-100"
+      class="h-9 w-9 fill-none stroke-zinc-900 stroke-2 dark:stroke-zinc-100"
       stroke-linecap="round"
       stroke-linejoin="round"
     >
@@ -54,11 +54,11 @@
     >&nbsp; ve dne.
   </p>
   <p
-    class="font-sans text-2xl text-center mt-4 flex justify-center items-center dark:text-zinc-100"
+    class="mt-4 flex items-center justify-center text-center font-sans text-2xl dark:text-zinc-100"
   >
     <svg
       viewBox="0 0 24 24"
-      class="stroke-2 fill-none stroke-zinc-900 h-9 w-9 m-2 dark:stroke-zinc-100"
+      class="m-2 h-9 w-9 fill-none stroke-zinc-900 stroke-2 dark:stroke-zinc-100"
       stroke-linecap="round"
       stroke-linejoin="round"
     >
@@ -73,7 +73,7 @@
   </p>
 
   <p
-    class="flex justify-center *:fill-none *:max-w-15 *:max-h-15 *:stroke-2 m-8"
+    class="m-8 flex justify-center *:max-h-15 *:max-w-15 *:fill-none *:stroke-2"
   >
     @switch (clothing?.rainIndex) {
       @case (0) {
@@ -143,5 +143,5 @@
     Data pro {{ clothing?.date | date: "mediumDate" }}
   </p>
 } @else {
-  Teraz premýšla...
+  <app-loader />
 }

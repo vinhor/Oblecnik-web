@@ -1,29 +1,30 @@
-<section class="flex flex-col items-center lg:items-end-safe relative">
-  <search class="mt-4">
-    <label for="search" class="text-zinc-800 dark:text-zinc-100"
+<section class="relative grid justify-end-safe">
+  <search class="mt-4 flex w-full min-w-40 items-center justify-end-safe">
+    <label for="search" class="mr-2 ml-4 text-zinc-800 dark:text-zinc-100"
       >Poloha:
     </label>
     <input
       type="search"
       id="search"
-      class="p-2 rounded-full max-w-full text-zinc-800 border-zinc-100 border-1 outline-none no-search-clear bg-zinc-100 mr-4"
+      autocomplete="off"
+      class="no-search-clear mx-4 box-border max-w-sm min-w-40 grow rounded-full border-1 border-zinc-100 bg-zinc-100 p-2 text-zinc-800 outline-none"
       [formControl]="search"
     />
   </search>
   @let locations = locations$ | async;
   @if (!!locations && locations.length > 0) {
     <ul
-      class="mx-4 mt-2 rounded-xl top-full absolute overflow-hidden max-w-full"
+      class="absolute top-full mx-4 mt-2 max-w-full justify-self-end overflow-hidden rounded-xl"
     >
       @for (location of locations; track $index) {
-        <li class="p-2 even:bg-zinc-100 box-border odd:bg-zinc-300">
+        <li class="box-border p-2 odd:bg-zinc-300 even:bg-zinc-100">
           <button (click)="handleClick(location)">
             {{ location.description }}
           </button>
         </li>
       }
     </ul>
-  } @else if (loading) {
-    <p class="text-white">teraz premýšla</p>
+  } @else if (loading()) {
+    <app-loader class="m-4 justify-self-center" />
   }
 </section>
