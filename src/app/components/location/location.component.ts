@@ -27,21 +27,29 @@ export class LocationComponent implements OnInit {
   search = new FormControl(this.nominatim.location().description);
   loading = signal(false);
   updatedByHandleClick = false;
+  locationSet = false;
 
   handleClick(location: Location) {
     this.updatedByHandleClick = true;
+    this.locationSet = true;
     this.nominatim.setLocation(location);
     this.search.setValue(location.description);
-    this.updatedByHandleClick = false;
   }
 
   ngOnInit(): void {
     this.locations$ = this.search.valueChanges.pipe(
-      tap(() => this.loading.set(true)),
+      tap(() => {
+        if (!this.updatedByHandleClick) {
+          this.loading.set(true);
+          this.locationSet = false;
+        }
+      }),
       debounceTime(1000),
       distinctUntilChanged(),
       switchMap((value) => {
-        if (this.updatedByHandleClick) return of([]);
+        if (this.updatedByHandleClick) {
+          return of([]);
+        }
 
         if (!value || value.trim().length < 3) {
           return of([]);

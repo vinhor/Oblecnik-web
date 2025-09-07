@@ -292,13 +292,13 @@ export type ClothingSummary = {
   date: string;
 };
 
-enum Wind {
+export enum Wind {
   No,
   Low,
   High, // 0 = < 8 m/s, 1 = 8-12 m/s, 2 = > 12 m/s
 }
 
-enum Rain {
+export enum Rain {
   Sunny,
   Overcast,
   LightRain,

@@ -25,14 +25,10 @@ export class NominatimService {
       .pipe(
         map((locations) =>
           locations.map((loc) => {
-            const address = loc.address as { [key: string]: any };
-            const state = address["state"] || "";
-            const country = address["country"] || "";
-            const descriptionParts = [loc.name, state, country].filter(Boolean);
             return {
               latitude: parseFloat(loc.lat),
               longitude: parseFloat(loc.lon),
-              description: descriptionParts.join(", "),
+              description: loc.display_name,
             };
           }),
         ),

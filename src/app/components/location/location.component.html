@@ -12,7 +12,7 @@
     />
   </search>
   @let locations = locations$ | async;
-  @if (!!locations && locations.length > 0) {
+  @if (!!locations && locations.length > 0 && !locationSet) {
     <ul
       class="absolute top-full mx-4 mt-2 max-w-full justify-self-end overflow-hidden rounded-xl"
     >
