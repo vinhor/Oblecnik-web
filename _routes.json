@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/metno"],
+  "include": ["/metno", "/nominatim"],
   "exclude": []
 }

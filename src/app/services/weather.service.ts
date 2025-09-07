@@ -6,7 +6,7 @@ import { map, Observable } from "rxjs";
   providedIn: "root",
 })
 export class WeatherService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   private weatherCodes = {
     cloudy: [
       "partlycloudy_day",
@@ -87,15 +87,19 @@ export class WeatherService {
     ],
   };
 
-  getClothing(): Observable<ClothingSummary> {
+  getClothing(
+    latitude: number,
+    longitude: number,
+  ): Observable<ClothingSummary> {
     return this.http
-      .get<ForecastData>(`/metno?lat=${50}&lon=${14}`) // CF function, because User-Agent
+      .get<ForecastData>(`/metno?lat=${latitude}&lon=${longitude}`) // CF function, because User-Agent
       .pipe(map((value) => this.weatherToClothing(value)));
   }
 
   private weatherToClothing(forecast: ForecastData): ClothingSummary {
     let date = "";
     forecast.properties.timeseries = forecast.properties.timeseries.filter(
+      // filter date only to today 7, 12, 15
       (value) => {
         let time = new Date(value.time);
         let now = new Date();
@@ -288,13 +292,13 @@ export type ClothingSummary = {
   date: string;
 };
 
-enum Wind {
+export enum Wind {
   No,
   Low,
   High, // 0 = < 8 m/s, 1 = 8-12 m/s, 2 = > 12 m/s
 }
 
-enum Rain {
+export enum Rain {
   Sunny,
   Overcast,
   LightRain,

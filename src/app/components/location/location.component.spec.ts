@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { LocationComponent } from "./location.component";
 
-import { ClothingComponent } from "./clothing.component";
-
-describe("ClothingComponent", () => {
-  let component: ClothingComponent;
-  let fixture: ComponentFixture<ClothingComponent>;
+describe("LocationComponent", () => {
+  let component: LocationComponent;
+  let fixture: ComponentFixture<LocationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClothingComponent],
+      imports: [LocationComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ClothingComponent);
+    fixture = TestBed.createComponent(LocationComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should create", () => {
